@@ -6,8 +6,8 @@ The basic requiremets are:
 
 * kubernetes topology labels (topology.kubernetes.io/region, topology.kubernetes.io/zone)
 * a DestinationRule CR for the endpoints with `localityLbSetting` settings.
-* Router sharding for DC specific ingress availability (Geographically based LoadBalancing)
 * Gateway injection for the Workload to be reached
+* *Optional* Router sharding for DC specific ingress availability (Geographically based LoadBalancing)
 * *Optional* Region or DC aware LoadBalancing Frontend for early locality based loadbalancing
 
 **Note** 
