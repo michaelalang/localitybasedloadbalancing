@@ -160,8 +160,8 @@ spec:
 example Endpoint verification of the configured topolgy based loadbalancing with `istioctl`
 ```
 $ istioctl  pc all $(oc get pods -l istio=gateway -o name)  | grep 'endpoint/' | grep '|8080||httpbin'
-endpoint/10.132.2.152:8080                                HEALTHY     region1/zone1/subzone1         outbound|8080||mockbin.namespace.svc.cluster.local
-endpoint/10.133.0.106:8080                                HEALTHY     region1/zone1/subzone2         outbound|8080||mockbin.namespace.svc.cluster.local 
+endpoint/10.132.2.152:8080                                HEALTHY     region1/zone1/subzone1         outbound|8080||httpbin.namespace.svc.cluster.local
+endpoint/10.133.0.106:8080                                HEALTHY     region1/zone1/subzone2         outbound|8080||httpbin.namespace.svc.cluster.local 
 ```
 # use cases
 ## Data Center or Cluster Fire section requirements
