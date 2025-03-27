@@ -200,3 +200,5 @@ Extending the already mentioned use cases to a mulit-master Service Mesh setup, 
 ```
 
 # Live Demo locality based loadbalancing
+
+![Show casing locality based loadbalancing](localitybasedloadbalancing.gif)
