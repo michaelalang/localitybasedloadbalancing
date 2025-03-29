@@ -172,6 +172,11 @@ A typically toplogy spread will be if your Data Center and Cluster need to be al
 
 In case of high latency sensitive applications, Geographically based loadbalancing is typically the topology decision maker. To ensure your traffic coming in on the closest possible node to the requester, you can use sharded Gateways to ensure all ServiceMesh proxies are located in the same topology zone and or subzone to avoid cross region traffic.
 
+Setting up a Demo with two OpenShift Router shards and two Istio Gateways show's how geo based routing will stick to the closes possible resource.
+(in the Demo, the header `zone` will simulate Geo IP differences)
+
+![Show casing geo based locality loadbalancing](localitybasedloadbalancing-geo-split.gif)
+
 ## Latency reduction by grouping Application and Backends into topology
 
 To ensure best possible performance between Applications and or their backends, topolgy spread classification into the same region/zone/subzone will guarantee that the closest possible healthy endpoint will be used to serve a request.
