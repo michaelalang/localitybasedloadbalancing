@@ -204,6 +204,10 @@ Extending the already mentioned use cases to a mulit-master Service Mesh setup, 
 ...
 ```
 
+*NOTE* according to the [matrix](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/locality_weight#locality-weighted-load-balancing) of envoys `locality_weight` and as shown below, you will see different responses according to the endpoints available in a locality zone.
+
+![Show casing locality based multi-cluster loadbalancing](localitybasedloadbalancing-cluster-failover.gif)
+
 # Live Demo locality based loadbalancing
 
 ![Show casing locality based loadbalancing](localitybasedloadbalancing.gif)
