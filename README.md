@@ -123,7 +123,7 @@ spec:
 1) DestinationRule subsets are to classify the same workload name into different version. In this scenario the Application versions are equal and serve the purpose for locality classification.
 2) maxRequestsPerConnection is mandatory to ensure locality based loadbalancing will switch over and not re-use the existing connection for subsequent requests.
 3) without sticking to the source IP of the ServiceMesh Gateway and in particular in multi-master scenarios, the consistency cannot be guaranteed without this setting to true.
-4) the failover scenarios you want to follow see [Gateway alignment](#Gateway%20alignment)
+4) the failover scenarios you want to follow see [Gateway alignment](#gateway-alignment)
 5) OutlierDetection ensure's Envoy proxies will not retry an endpoint in a failed or empty zone.
 
 ### Gateway alignment
