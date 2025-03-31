@@ -217,6 +217,25 @@ or to scale the east-west gateways accordingly to satistfy the healthy endpoint 
 
 ![Show casing locality based multi-cluster loadbalancing](localitybasedloadbalancing-cluster-failover.gif)
 
+## Multi-master ServiceMesh cluster scenarios with priority between Cluster
+
+With a special requirement to failover `zone1` from cluster *one* to `zone1` on cluster *two* and worst case back to cluster *one* `zone2` we cannot succeed with locality based loabalancing in `failover` as the subzone endpoints in zone2 are still healthy if zone1 endpoints are all down. 
+`failoverPriority` can be utilized to get the scenario working as expected. Therefor we classify the priorities to exclude the zone and to match the version instead:
+
+* region/zone1/subzone - cluster1/version=v1
+* region/zone1/subzone - cluster2/version=v1
+* region/zone2/subzone - cluster1/version=v2
+
+```
+      localityLbSetting:
+        enabled: true
+        failoverPriority:
+        - topology.istio.io/subzone
+        - version=v1
+```
+
+![Show casing locality based failoverPriority](localitybasedloadbalancing-prioriy-based.gif)
+
 # Live Demo locality based loadbalancing
 
 ![Show casing locality based loadbalancing](localitybasedloadbalancing.gif)
