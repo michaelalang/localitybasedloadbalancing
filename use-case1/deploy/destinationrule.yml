@@ -3,7 +3,7 @@ kind: DestinationRule
 metadata:
   name: mockbin
 spec:
-  host: mockbin.ns1.svc.cluster.local
+  host: mockbin
   subsets:
     - labels:
         version: v1
