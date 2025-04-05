@@ -20,14 +20,14 @@ A typically toplogy spread will be if your Data Center and Cluster need to be al
 for the purpose of the Demo you can copy the wildcard certificate of the Cluster but I highly recommend to 
 instead use `cert-manager` and individual certificates per hostname to avoid known routing errors due to SSL caching.
 
-    ```
-    oc create secret tls gateway-v1-secret --cert=... --key=... 
-    ``` 
+```
+oc create secret tls gateway-v1-secret --cert=... --key=... 
+``` 
 
 * deployment of application(s)
-    ``` 
-    oc apply -k deploy
-    ``` 
+``` 
+oc apply -k deploy
+``` 
 
 ### deployment verification
 
