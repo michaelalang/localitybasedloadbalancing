@@ -1,0 +1,274 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mockbin
+    version: v1
+  name: mockbin-v1
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: mockbin
+      version: v1
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mockbin
+        sidecar.istio.io/inject: 'true'
+        version: v1
+    spec:
+      containers:
+        - env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: WEB_CONCURRENCY
+              value: '5'
+            - name: TZ
+              value: UTC
+            - name: TOPOLOGY_REGION
+              value: datacenter1
+            - name: TOPOLOGY_ZONE
+              value: firezone1
+            - name: TOPOLOGY_SUBZONE
+              value: sub1
+          image: localhost/mockbin:v1.0.0
+          imagePullPolicy: IfNotPresent
+          name: mockbin
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        topology.kubernetes.io/region: datacenter1
+        topology.kubernetes.io/zone: firezone1
+        topology.istio.io/subzone: sub1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mockbin
+    version: v2
+  name: mockbin-v2
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: mockbin
+      version: v2
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mockbin
+        sidecar.istio.io/inject: 'true'
+        version: v2
+    spec:
+      containers:
+        - env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: WEB_CONCURRENCY
+              value: '5'
+            - name: TZ
+              value: UTC
+            - name: TOPOLOGY_REGION
+              value: datacenter1
+            - name: TOPOLOGY_ZONE
+              value: firezone2
+            - name: TOPOLOGY_SUBZONE
+              value: sub2
+          image: localhost/mockbin:v1.0.0
+          imagePullPolicy: IfNotPresent
+          name: mockbin
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        topology.kubernetes.io/region: datacenter1
+        topology.kubernetes.io/zone: firezone2
+        topology.istio.io/subzone: sub2
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mockbin
+    version: v3
+  name: mockbin-v3
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: mockbin
+      version: v3
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mockbin
+        sidecar.istio.io/inject: 'true'
+        component: backend
+        version: v3
+    spec:
+      containers:
+        - env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: WEB_CONCURRENCY
+              value: '5'
+            - name: TZ
+              value: UTC
+            - name: TOPOLOGY_REGION
+              value: datacenter1
+            - name: TOPOLOGY_ZONE
+              value: firezone1
+            - name: TOPOLOGY_SUBZONE
+              value: sub1
+          image: localhost/mockbin:v1.0.0
+          imagePullPolicy: IfNotPresent
+          name: mockbin
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        topology.kubernetes.io/region: datacenter1
+        topology.kubernetes.io/zone: firezone1
+        topology.istio.io/subzone: sub1
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mockbin
+    version: v4
+  name: mockbin-v4
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      app: mockbin
+      version: v4
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: mockbin
+        component: backend
+        sidecar.istio.io/inject: 'true'
+        version: v4
+    spec:
+      containers:
+        - env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            - name: WEB_CONCURRENCY
+              value: '5'
+            - name: TZ
+              value: UTC
+            - name: TOPOLOGY_REGION
+              value: datacenter1
+            - name: TOPOLOGY_ZONE
+              value: firezone2
+            - name: TOPOLOGY_SUBZONE
+              value: sub2
+          image: localhost/mockbin:v1.0.0
+          imagePullPolicy: IfNotPresent
+          name: mockbin
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      nodeSelector:
+        topology.kubernetes.io/region: datacenter1
+        topology.kubernetes.io/zone: firezone2
+        topology.istio.io/subzone: sub2
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 1
+---

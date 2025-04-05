@@ -168,6 +168,8 @@ endpoint/10.133.0.106:8080                                HEALTHY     region1/zo
  
 A typically toplogy spread will be if your Data Center and Cluster need to be aligned into different fire sections. The Kubernetes labels for topology should be sufficient and if they do not align with your ServiceMesh topology rollout, you can utilize the topology.istio.io/subzone label in addition.
 
+[POC](use-case1/README.md)
+
 ## Geographically preferred Cluster nodes responses
 
 In case of high latency sensitive applications, Geographically based loadbalancing is typically the topology decision maker. To ensure your traffic coming in on the closest possible node to the requester, you can use sharded Gateways to ensure all ServiceMesh proxies are located in the same topology zone and or subzone to avoid cross region traffic.

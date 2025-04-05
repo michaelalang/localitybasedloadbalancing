@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-v1
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    istio: gateway-v1
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-v2
+spec:
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+    - name: http2
+      port: 80
+      protocol: TCP
+      targetPort: 8080
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 8443
+  selector:
+    istio: gateway-v2
+  sessionAffinity: None
+  type: ClusterIP
+---
