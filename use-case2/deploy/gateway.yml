@@ -1,0 +1,48 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: gateway-v1
+spec:
+  selector:
+    istio: gateway-v1
+  servers:
+    - hosts:
+        - mockbin.apps.example.com
+      port:
+        name: https
+        number: 8443
+        protocol: HTTPS
+      tls:
+        credentialName: gateway-v1-secret
+        mode: SIMPLE
+    - hosts:
+        - mockbin.apps.example.com
+      port:
+        name: http
+        number: 8080
+        protocol: HTTP
+---
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: gateway-v2
+spec:
+  selector:
+    istio: gateway-v2
+  servers:
+    - hosts:
+        - mockbin.apps.example.com
+      port:
+        name: https
+        number: 8443
+        protocol: HTTPS
+      tls:
+        credentialName: gateway-v2-secret
+        mode: SIMPLE
+    - hosts:
+        - mockbin.apps.example.com
+      port:
+        name: http
+        number: 8080
+        protocol: HTTP
+---

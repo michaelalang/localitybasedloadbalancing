@@ -1,0 +1,44 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/balance: roundrobin
+    haproxy.router.openshift.io/set-forwarded-headers: Always
+  labels:
+    zonename: zone1
+  name: mockbin-zone1
+spec:
+  host: mockbin.apps.example.com
+  port:
+    targetPort: https
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: passthrough
+  to:
+    kind: Service
+    name: gateway-v1
+    weight: 100
+  wildcardPolicy: None
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  annotations:
+    haproxy.router.openshift.io/balance: roundrobin
+    haproxy.router.openshift.io/set-forwarded-headers: Always
+  labels:
+    zonename: zone2
+  name: mockbin-zone2
+spec:
+  host: mockbin.apps.example.com
+  port:
+    targetPort: https
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: passthrough
+  to:
+    kind: Service
+    name: gateway-v2
+    weight: 100
+  wildcardPolicy: None
+---

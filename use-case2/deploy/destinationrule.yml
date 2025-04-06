@@ -1,0 +1,28 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: mockbin
+spec:
+  host: mockbin
+  subsets:
+    - labels:
+        version: v1
+      name: v1
+    - labels:
+        version: v2
+      name: v2
+  trafficPolicy:
+    connectionPool:
+      http:
+        maxRequestsPerConnection: 1
+    loadBalancer:
+      consistentHash:
+        useSourceIp: true
+      localityLbSetting:
+        enabled: true
+    outlierDetection:
+      baseEjectionTime: 1m
+      consecutive5xxErrors: 0
+      consecutiveGatewayErrors: 0
+      interval: 100ms
+      maxEjectionPercent: 0

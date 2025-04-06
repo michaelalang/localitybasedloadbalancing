@@ -1,0 +1,78 @@
+---
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: zone1
+  namespace: openshift-ingress-operator
+spec:
+  clientTLS:
+    clientCA:
+      name: ""
+    clientCertificatePolicy: ""
+  defaultCertificate:
+    name: zone1-tls-secret
+  domain: zone1.apps.example.com
+  endpointPublishingStrategy:
+    nodePort:
+      protocol: TCP
+    type: NodePortService # << for the POC only, use LoadBalancer instead
+  httpCompression: {}
+  httpEmptyRequestsPolicy: Respond
+  httpErrorCodePages:
+    name: custom-errors
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        topology.kubernetes.io/zone: zone1
+  replicas: 2
+  routeSelector:
+    matchExpressions:
+      - key: zonename
+        operator: In
+        values:
+          - zone1
+  tuningOptions:
+    clientTimeout: 10h0m0s
+    reloadInterval: 0s
+    serverTimeout: 10h0m0s
+    tunnelTimeout: 10h0m0s
+  unsupportedConfigOverrides: null
+---
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: zone2
+  namespace: openshift-ingress-operator
+spec:
+  clientTLS:
+    clientCA:
+      name: ""
+    clientCertificatePolicy: ""
+  defaultCertificate:
+    name: zone2-tls-secret
+  domain: zone2.apps.example.com
+  endpointPublishingStrategy:
+    nodePort:
+      protocol: TCP
+    type: NodePortService # << for the POC only, use LoadBalancer instead
+  httpCompression: {}
+  httpEmptyRequestsPolicy: Respond
+  httpErrorCodePages:
+    name: custom-errors
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        topology.kubernetes.io/zone: zone2
+  replicas: 2
+  routeSelector:
+    matchExpressions:
+      - key: zonename
+        operator: In
+        values:
+          - zone2
+  tuningOptions:
+    clientTimeout: 10h0m0s
+    reloadInterval: 0s
+    serverTimeout: 10h0m0s
+    tunnelTimeout: 10h0m0s
+  unsupportedConfigOverrides: null
