@@ -27,7 +27,8 @@ Extending the already mentioned use cases to a mulit-master Service Mesh setup, 
 
 * deployment of application(s)
 ``` 
-oc apply -k deploy
+oc --context cluster1 apply -k deploy
+oc --context cluster2 apply -k deploy
 ``` 
 
 ### deployment verification
