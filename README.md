@@ -219,6 +219,8 @@ trafficPolicy:
 ``` 
 or to scale the east-west gateways accordingly to satistfy the healthy endpoint percentage as documented in envoys [matrix](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/upstream/load_balancing/locality_weight#locality-weighted-load-balancing).
 
+[POC](use-case3/README.md)
+
 ![Show casing locality based multi-cluster loadbalancing](localitybasedloadbalancing-cluster-failover.gif)
 
 ## Multi-master ServiceMesh cluster scenarios with priority between Cluster

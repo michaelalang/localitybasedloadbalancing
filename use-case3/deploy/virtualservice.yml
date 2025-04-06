@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: mockbin
+spec:
+  gateways:
+    - gateway
+  hosts:
+    - mockbin.apps.example.com
+  http:
+    - route:
+        - destination:
+            host: mockbin
+            port:
+              number: 8080
+          weight: 100
