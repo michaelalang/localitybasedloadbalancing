@@ -12,7 +12,7 @@ Extending the already mentioned use cases to a mulit-master Service Mesh setup, 
     # cluster 1, two nodes with each one in a zone
     oc --context cluster1 label node node1 \
        topology.kubernetes.io/region=datacenter1 \
-       toptopology.kubernetes.io/zoneology.kubernetes.io/zone=zone1
+       topology.kubernetes.io/zone=zone1
     oc --context cluster1 label node node2 \
        topology.kubernetes.io/region=datacenter1 \
        topology.kubernetes.io/zone=zone2
@@ -102,7 +102,7 @@ mockbin-v1-77d7c8b575-fwngr
 
 ```
 oc --context cluster1 scale --replicas=1 deploy/mockbin-v1 deploy/mockbin-v2
-oc --context central -n lb-multi get pods
+oc --context cluster1 -n lb-multi get pods
 ```
 
 expected output

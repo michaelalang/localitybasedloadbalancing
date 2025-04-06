@@ -240,6 +240,8 @@ With a special requirement to failover `zone1` from cluster *one* to `zone1` on 
         - version=v1
 ```
 
+[POC](use-case4/README.md)
+
 ![Show casing locality based failoverPriority](localitybasedloadbalancing-prioriy-based.gif)
 
 # Live Demo locality based loadbalancing
