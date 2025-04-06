@@ -17,7 +17,7 @@ In case of high latency sensitive applications, Geographically based loadbalanci
     ```
 
 * create a Certificate
-                                                                                                                                                                 107,1         42%
+
 for the purpose of the Demo you can copy the wildcard certificate of the Cluster but I highly recommend to
 instead use `cert-manager` and individual certificates per hostname to avoid known routing errors due to SSL caching.
 
