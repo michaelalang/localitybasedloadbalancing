@@ -177,6 +177,8 @@ In case of high latency sensitive applications, Geographically based loadbalanci
 Setting up a Demo with two OpenShift Router shards and two Istio Gateways show's how geo based routing will stick to the closes possible resource.
 (in the Demo, the header `zone` will simulate Geo IP differences)
 
+[POC](use-case2/README.md)
+
 ![Show casing geo based locality loadbalancing](localitybasedloadbalancing-geo-split.gif)
 
 ## Latency reduction by grouping Application and Backends into topology
