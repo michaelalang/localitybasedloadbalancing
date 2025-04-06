@@ -26,6 +26,13 @@ oc -n openshift-ingress create secret tls zone1-tls-secret --cert=... --key=...
 oc -n openshift-ingress create secret tls zone2-tls-secret --cert=... --key=...
 ```
 
+* update the default ingress controller to ignore zone1 and zone2 routes
+
+```
+oc -n openshift-ingress-operator patch ingresscontroller default --type=merge \
+ -p '{"spec":{"routeSelector":{"matchExpressions":[{"key":"zonename","operator":"NotIn","values":["zone1","zone2"]}]}}}'
+```
+
 * create two ingress controller to simulate geographical separation
 
 ```
@@ -53,6 +60,9 @@ available: 2
 ``` 
 oc apply -k deploy
 ``` 
+
+*NOTE* the deployment creates individual services for the routes since we do not have a Load Balancing instance in front of our OCP cluster.
+It is not mandatory to create individual services for the routes if you do have a Load Balancer in front as seen in the `simulate one Geo location being down` scenario.
 
 ### deployment verification
 
@@ -175,6 +185,45 @@ done
 {"name":"mockbin-v2-5f649dcf9c-gh6wp","zone":"zone2"}
 {"name":"mockbin-v2-5f649dcf9c-gh6wp","zone":"zone2"}
 {"name":"mockbin-v2-5f649dcf9c-gh6wp","zone":"zone2"}
+```
+
+## simulate one Geo location being down
+
+* *NOTE* these steps are only necessary as we do not have a Load Balancer in front which can distinguish between both ingress controllers.
+
+* shutdown the gateway in zone2 
+
+```
+oc scale --replicas=0 deploy/gateway-v2
+```
+
+* patch the routes to use the `shared` service instead 
+
+```
+oc patch route mockbin-zone1 --type=merge -p '{"spec":{"to":{"name":"gateway-all"}}}'
+oc patch route mockbin-zone2 --type=merge -p '{"spec":{"to":{"name":"gateway-all"}}}'
+```
+
+* connect to the ingress with the settings unchanged meaning hitting zone2 configuration
+
+```
+for x in $(seq 1 10); do \
+curl --resolve mockbin.apps.example.com:${PORT}:${IP} -sk https://mockbin.apps.example.com:${PORT} | \
+  jq -rc '{"name":.env.HOSTNAME,"zone":.env.TOPOLOGY_ZONE}'; done
+```
+
+expected output 
+```
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
+{"name":"mockbin-v1-664f69d9d6-s29w5","zone":"zone1"}
 ```
 
 ## cleanup use-case

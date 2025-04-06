@@ -22,6 +22,7 @@ spec:
       labels:
         istio: gateway-v1
         sidecar.istio.io/inject: 'true'
+        geogateway: "true"
     spec:
       containers:
         - image: auto
@@ -63,6 +64,7 @@ spec:
       labels:
         istio: gateway-v2
         sidecar.istio.io/inject: 'true'
+        geogateway: "true"
     spec:
       containers:
         - image: auto
